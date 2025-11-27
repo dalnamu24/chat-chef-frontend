@@ -1,12 +1,13 @@
 import React from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const InfoInput = ({ content }) => {
+const InfoInput = ({ content, onRemove }) => {
   // logic
-  const { label, text } = content;
+  const { id, label, text } = content;
 
-  const onRemove = () => {
-    console.log("재료 삭제하기");
+  const handleRemove = () => {
+    console.log("재료 삭제하기"); // 전체 주석처리해도 됨. 콘솔에 찍어주는 내용이라 중요하지 않음.
+    onRemove(id);
   };
 
   // view
@@ -29,10 +30,12 @@ const InfoInput = ({ content }) => {
                       focus:border-black w-full pt-4 pr-9 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
                       border-chef-gray-200 rounded-2xl placeholder:text-chef-gray-200"
         />
+
+        {/* 휴지통 버튼 */}
         <button
           type="button"
           className="absolute right-3 inset-y-0 flex items-center px-1"
-          onClick={onRemove}
+          onClick={handleRemove}
         >
           <FaRegTrashAlt />
         </button>

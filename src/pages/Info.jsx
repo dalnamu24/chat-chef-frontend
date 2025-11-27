@@ -10,10 +10,30 @@ const Info = () => {
   const history = useNavigate();
 
   // TODO: set함수 추가하기
-  const [ingredientList] = useState([]); // 사용자가 입력할 재료 목록
+  const [ingredientList, setIngredientList] = useState([]); // 사용자가 입력할 재료 목록
 
   const addIngredient = () => {
+    // 기본 데이터 추가
     console.log("재료 추가하기");
+    const id = Date.now();
+
+    const newItem = {
+      id, //원래 코딩은 id: id, 로 표현해야하지만 이걸 축약해서 그냥 id 로만 표현
+      label: `ingredient_${id}`,
+      text: "재료명",
+      value: "",
+    };
+
+    // 기존 배열(ingredientList 라는 배열)에 객체 추가(newItem)할때
+    setIngredientList([...ingredientList, newItem]);
+  };
+
+  const handelRemove = (selectedId) => {
+    console.log("🚀 ~ handelRemove ~ selectedId:", selectedId);
+    const filterIgredientList = ingredientList.filter(
+      (item) => item.id !== selectedId
+    );
+    setIngredientList(filterIgredientList);
   };
 
   const handleNext = () => {
@@ -44,7 +64,11 @@ const Info = () => {
             {/* START:input 영역 */}
             <div>
               {ingredientList.map((item) => (
-                <InfoInput key={item.id} content={item} />
+                <InfoInput
+                  key={item.id}
+                  content={item}
+                  onRemove={handelRemove}
+                />
               ))}
             </div>
             {/* END:input 영역 */}
