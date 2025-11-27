@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MessageBox from "../components/MessageBox";
 import PrevButton from "../components/PrevButton";
 import { MoonLoader } from "react-spinners";
 
-const Chat = () => {
+const Chat = ({ ingredientList }) => {
   // logic
 
   const [value, setValue] = useState("");
+
+  // 페이지 진입 시 딱 한번 실행
+  useEffect(() => {
+    console.log("ingredientList", ingredientList);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // TODO: set함수 추가하기
   const [messages] = useState([]); // chatGPT와 사용자의 대화 메시지 배열

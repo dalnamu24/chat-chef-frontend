@@ -5,7 +5,7 @@ import AddButton from "../components/AddButton";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
-const Info = () => {
+const Info = ({ sendIngredientList }) => {
   // logic
   const history = useNavigate();
 
@@ -28,6 +28,13 @@ const Info = () => {
     setIngredientList([...ingredientList, newItem]);
   };
 
+  const handleInputChange = (selectedItem) => {
+    const updatedIngredientList = ingredientList.map((item) =>
+      item.id === selectedItem.id ? selectedItem : item
+    ); // item.id 와 selectedItem.id 의 값이 같으면 selectedItem 을 반환, 그렇지 않으면 item을 반환하는 삼항연산자
+    setIngredientList(updatedIngredientList);
+  };
+
   const handelRemove = (selectedId) => {
     console.log("🚀 ~ handelRemove ~ selectedId:", selectedId);
     const filterIgredientList = ingredientList.filter(
@@ -37,8 +44,10 @@ const Info = () => {
   };
 
   const handleNext = () => {
-    console.log("chat페이지로 이동");
-    // Chat 페이지로 이동 구현
+    // 부모에게 데이터 전송
+    sendIngredientList(ingredientList);
+    // console.log("chat페이지로 이동");
+    // 미션 : Chat 페이지로 이동 구현
     history("/chat");
   };
 
@@ -68,6 +77,7 @@ const Info = () => {
                   key={item.id}
                   content={item}
                   onRemove={handelRemove}
+                  onChange={handleInputChange}
                 />
               ))}
             </div>
